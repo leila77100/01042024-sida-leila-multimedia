@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Sida Leila">
+    <title>Animacion con Canva</title>
+    <style>
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="miCanvas" width="400" height="200"></canvas>
+    <script>
+        // obtener el contexto canvas
+        let canvas = document.getElementById("miCanvas");
+        let ctx = canvas.getContext("2d");
+        // definir la position inicial de un circulo
+        let x = 0;
+        let y =canvas.height/2;
+
+        //velocidad al objeto
+        let velocidad = 2;
+
+        //funcion para dibujar un circulo
+        function dibujarCirculo(){
+            // limpiar el lienzo canvas
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            //dibujar el circulo
+            ctx.beginPath();
+            ctx.arc(x,y, 10,0, Math.PI *2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+
+            // actualiza la posicion del circulo
+            x += velocidad;
+            // si el circulo llega al borde derecho del canvas, entonces reinicia la posicion de inicio
+            if (x > canvas.width){
+                x=0;
+            }
+            // solicitar el proximo circulo de animacion
+            requestAnimationFrame(dibujarCirculo)
+        }
+
+        // iniciar la animacio
+        dibujarCirculo()
+
+       
+    </script>
+</body>
+</html>

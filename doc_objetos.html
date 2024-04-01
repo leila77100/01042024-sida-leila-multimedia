@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dos circulos en movimiento</title>
+    <style>
+        canvas{
+            border: 5px solid orange;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="miCanvas" width="600" height="400"></canvas>
+    <script>
+//Obtener el lienzo (canvas) y el contecto (2d)
+let canvas = document.getElementById("miCanvas");
+let ctx =canvas.getContext("2d");
+// Defini los proporciones de los circulos
+
+let circulo1={
+    x:50,
+    y: canvas.height /2,
+    radius: 20,
+    speed: 2,
+    color: "red"
+};
+
+let circulo2={
+    x:150,
+    y: canvas.height /2,
+    radius: 40,
+    speed: 3,
+    color: "blue"
+};
+
+function dibujarCirculo(circulo){
+   ctx.beginPath();
+   ctx.arc(circulo.x, circulo.y, circulo.radius, 0, Math.PI *2);
+   ctx.fillStyle = circulo.color;
+   ctx.fill();
+   ctx.closePath();
+}
+
+// function para actualizar la posicion del circulo
+function actualizaCirculo(circulo){
+
+    circulo.x += circulo.speed;
+    // si el circulo alcanZa el borde del lienzo, lo ñueve al borde izquierdo
+    if(circulo.x > canvas.width + circulo.radius){
+        circulo.x = circulo.radius
+    }
+}
+
+function animacion(){
+    // limpiar el lienzo
+    ctx.clearRect(0,0, canvas.width, canvas.height);
+
+    // actualizar y dibujar los circulos
+    dibujarCirculo(circulo1);
+    dibujarCirculo(circulo2);
+    actualizaCirculo(circulo1);
+    actualizaCirculo(circulo2);
+  //llamar la function para crear una animacion continua
+requestAnimationFrame(animacion);
+}
+
+
+animacion();
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semafor</title>
+    <style>
+        canvas{
+            border: 5px solid red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="unSemaforo" width="200" height="400"></canvas>
+    <script>
+// Obtenier el lienzo y contexto (2d)
+let canvas = document.getElementById("unSemaforo");
+let ctx = canvas.getContext("2d");
+
+//Propriedades del Semaforo
+
+let semaforo = {
+    x: canvas.width /2,
+    y: 50,
+    width: 60,
+    height: 200,
+    radioRojo:20,
+    radioAmarillo:20,
+    radioVerde:20,
+    colorRojo: "red",
+    colorAmarillo: "yellow",
+    colorVerde:"green"
+}
+
+// variable para controlor el parpadero de la luz amarilla
+let siAmarilloOn = false;
+let rojoOn= false;
+let verdeOn = false;
+
+function dibujarSemaforo(){
+    // dibujar el poste
+    ctx.fillStyle = "black";
+    ctx.fillRect(semaforo.x -10, semaforo.y, 20, semaforo.height)
+
+        // dibujar el circulo rojo
+        ctx.beginPath();
+        ctx.arc(semaforo.x, semaforo.y +30, semaforo.radioRojo, 0, Math.PI *2);
+        if(rojoOn){
+            ctx.fillStyle = semaforo.colorRojo;
+            ctx.fill();
+        }
+       
+
+        // dibujar el circulo amarillo
+        ctx.beginPath();
+        ctx.arc(semaforo.x, semaforo.y +80, semaforo.radioAmarillo, 0, Math.PI *2);
+        
+        if(siAmarilloOn){
+            ctx.fillStyle = semaforo.colorAmarillo;
+            ctx.fill();
+        }
+
+       
+
+         // dibujar el circulo verde
+        ctx.beginPath();
+        ctx.arc(semaforo.x, semaforo.y +130, semaforo.radioVerde, 0, Math.PI *2);
+        if(verdeOn){
+            ctx.fillStyle = semaforo.colorVerde;
+            ctx.fill();
+        }
+        
+};
+
+// funcion principal para dibujar y actualizar el semaforo
+function dibujar(){
+    // limpiar el lienzo
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    // dibuja el semafor
+    dibujarSemaforo();
+}
+    // function para alternar el color parpadeo amarillo
+    function cambiarAmarillo(){
+        siAmarilloOn =! siAmarilloOn;
+        dibujar();
+    }
+
+    function cambiarVerde(){
+      verdeOn =! verdeOn;
+        dibujar();
+    }
+
+    function cambiarRojo(){
+      rojoOn =! rojoOn;
+        dibujar();
+    }
+
+    // function para pardedor en milisegundo
+
+   
+    setInterval(cambiarRojo, 750);
+    setInterval(cambiarAmarillo, 725);
+    setInterval(cambiarVerde, 700);
+
+
+
+dibujar();
+
+    </script>
+    
+</body>
+</html>
