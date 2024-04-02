@@ -34,8 +34,7 @@ let semaforo = {
 
 // variable para controlor el parpadero de la luz amarilla
 let siAmarilloOn = false;
-let rojoOn= false;
-let verdeOn = false;
+
 
 function dibujarSemaforo(){
     // dibujar el poste
@@ -45,66 +44,51 @@ function dibujarSemaforo(){
         // dibujar el circulo rojo
         ctx.beginPath();
         ctx.arc(semaforo.x, semaforo.y +30, semaforo.radioRojo, 0, Math.PI *2);
-        if(rojoOn){
-            ctx.fillStyle = semaforo.colorRojo;
-            ctx.fill();
-        }
-       
-
+        ctx.fillStyle = semaforo.colorRojo;
+        ctx.fill();
+        
         // dibujar el circulo amarillo
         ctx.beginPath();
         ctx.arc(semaforo.x, semaforo.y +80, semaforo.radioAmarillo, 0, Math.PI *2);
+        ctx.fillStyle = semaforo.colorAmarillo;
+        ctx.fill();
         
-        if(siAmarilloOn){
-            ctx.fillStyle = semaforo.colorAmarillo;
-            ctx.fill();
-        }
-
-       
-
-         // dibujar el circulo verde
+        // dibujar el circulo verde
         ctx.beginPath();
         ctx.arc(semaforo.x, semaforo.y +130, semaforo.radioVerde, 0, Math.PI *2);
-        if(verdeOn){
-            ctx.fillStyle = semaforo.colorVerde;
-            ctx.fill();
-        }
+        ctx.fillStyle = semaforo.colorVerde;
+        ctx.fill();
         
-};
-
-// funcion principal para dibujar y actualizar el semaforo
-function dibujar(){
-    // limpiar el lienzo
+        
+    };
     ctx.clearRect(0, 0, canvas.width, canvas.height); 
-    // dibuja el semafor
-    dibujarSemaforo();
-}
-    // function para alternar el color parpadeo amarillo
-    function cambiarAmarillo(){
-        siAmarilloOn =! siAmarilloOn;
-        dibujar();
-    }
-// function para alternar el color parpadeo Verde
-    function cambiarVerde(){
-      verdeOn =! verdeOn;
-        dibujar();
-    }
-// function para alternar el color parpadeo Rojo
-    function cambiarRojo(){
-      rojoOn =! rojoOn;
-        dibujar();
-    }
+
 
     // function para pardedor en milisegundo
 
+    function secuenciaSemaforo(){
+if (semaforo.colorRojo ==="red"){
+ semaforo.colorRojo = "grey";
+ semaforo.colorAmarillo = "yellow";
+ semaforo.colorVerde = "grey";
+} 
+else if (semaforo.colorAmarillo ==="yellow"){
+ semaforo.colorRojo =" grey";
+ semaforo.colorAmarillo = "grey";
+ semaforo.colorVerde = "green";
+}
+else {
+ semaforo.colorRojo = "red";
+ semaforo.colorAmarillo = "grey";
+ semaforo.colorVerde = "grey";
+}
+
+ dibujarSemaforo();
+
+} 
    
-    setInterval(cambiarRojo, 750);
-    setInterval(cambiarAmarillo, 725);
-    setInterval(cambiarVerde, 700);
-
-
-
-dibujar();
+setInterval(secuenciaSemaforo, 2000);
+dibujarSemaforo();
 
     </script>
     
